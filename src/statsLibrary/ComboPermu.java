@@ -1,3 +1,5 @@
+package statsLibrary;
+
 import java.math.BigInteger;
 
 public class ComboPermu {

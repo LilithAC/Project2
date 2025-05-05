@@ -1,39 +1,25 @@
+package statsLibrary;
+
 import java.math.BigDecimal;
 
 public class DistributionsUpdate {
-    public static BigDecimal binomial(int n, int y, int p, int q) {
-        ComboPermu test = new ComboPermu();
-        BigDecimal combo =  new BigDecimal(test.combination(n,y));
-        BigDecimal p1 = BigDecimal.valueOf(Math.pow(p,y));
-        BigDecimal q1 = BigDecimal.valueOf(Math.pow(q, (n-y)));
-        return combo.multiply(q1.multiply(p1));
-    }
-
-    public static double geometric(int y, double p, double q){
-        double q1 = Math.pow(q, (y-1));
-        return q1*p;
-    }
-
-    public static BigDecimal negativeBinomial(int y, int r, int p, int q) {
-        ComboPermu a = new ComboPermu();
-        BigDecimal combo = new BigDecimal(a.combination(y-1,r-1));
-        BigDecimal p1 = BigDecimal.valueOf(Math.pow(p,r));
-        BigDecimal q1 = BigDecimal.valueOf(Math.pow(q,y-r));
-        return combo.multiply(p1.multiply(q1));
-    }
-
-    public static BigDecimal hypergeometric(int y, int r, int n, int N) {
-        ComboPermu a = new ComboPermu();
-        BigDecimal combo1 = new BigDecimal(a.combination(r, y));
-        BigDecimal combo2 = new BigDecimal(a.combination(N-r,n-y));
-        BigDecimal combo3 = new BigDecimal(a.combination(N, n));
-        return combo1.multiply(combo2.multiply(combo3));
-    }
-
     public static BigDecimal poisson(int y, double lambda) {
         ComboPermu a = new ComboPermu();
         BigDecimal yFactorial = new BigDecimal(a.factorial(y));
         BigDecimal numerator = new BigDecimal(Math.pow(Math.E, -lambda)*Math.pow(lambda,y));
         return numerator.divide(yFactorial);
+    }
+
+    public static double uniform(int a, int b, int c, int d) {
+        return (double) (d-c)/(b-a);
+    }
+
+    //given an upper and lower bound and standard deviation amount, returns the k variable that describes how many standard deviations away from the mean the data is
+    public static double chevycheb(int lower, int upper, int stdDev) {
+        if((upper-lower)%2 != 0) {
+            throw new IllegalStateException("Even window of upper and lower bounds only.");
+        }
+        int within = (upper - lower)/2;
+        return (double) within/stdDev;
     }
 }
